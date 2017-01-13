@@ -12,6 +12,9 @@ hardware required for the badge development is:
   [resistors](https://www.amazon.com/E-Projects-EPC-103-Value-Resistor-Kit/dp/B00E9YQQSS/ref=sr_1_3?s=industrial&ie=UTF8&qid=1484331498&sr=1-3&keywords=resistors)
 - [Breadboard](https://www.amazon.com/eBoot-Experiment-Solderless-Breadboard-400-Points/dp/B01MG5IPUX/ref=sr_1_1?s=industrial&ie=UTF8&qid=1484331573&sr=1-1-spons&keywords=breadboard&psc=1)
 . The bigger the better.
+All of the above are links to Amazon. Some other good sources for these parts
+are Digikey, Mouser and Ebay. These are only some of the places to acquire the
+necessary parts.
 
 # Setup
 An effort has/will be made to ensure that users/developers are able to
