@@ -130,62 +130,63 @@ StateBase *CurrentState = 0;
 static const uint32_t TIME_BETWEEN_INITS = 100;
 
 uint32_t startBadge() {
-	uint32_t retVal = 0;
+	//SSD1306_UpdateScreen();
+	//delay(5000);
+
+	//uint32_t retVal = 0;
 	//initFlash();
 
-	GUI_ListItemData items[4];
-	GUI_ListData DrawList((const char *) "Self Check", items, uint8_t(0), uint8_t(0), uint8_t(128), uint8_t(64),
-			uint8_t(0), uint8_t(0));
+
+	//GUI_ListItemData items[4];
+	//GUI_ListData DrawList((const char *) "Self Check", items, uint8_t(0), uint8_t(0), uint8_t(128), uint8_t(64),
+	//		uint8_t(0), uint8_t(0));
 	//DO SELF CHECK
 	if (gui_init()) {
-		delay(1000);
-		SSD1306_Fill(0);
-		SSD1306_Puts("Hello", &Font_7x10, 1);
+		delay(5000);
+		//gui_draw();
+		int8_t pix_val = 1;
+		while(1){
+			for(int j = 0; j < SSD1306_HEIGHT; j++)
+			{
+				for(int i = 0; i < SSD1306_WIDTH; i++)
+				{
+					SSD1306_DrawPixel(i,j, pix_val);
+
+					//delay(500);
+				}
+				SSD1306_UpdateScreen();
+			}
+			pix_val = ~pix_val;
+		}
+		//delay(1000);
+		//gui_draw();
+		//SSD1306_Puts("Hello\n", &Font_7x10, 1);
+		/*SSD1306_UpdateScreen();
+		int16_t x0 = 63;
+		int16_t y0 = 31;
+		int16_t r = 10;
+		uint8_t color = 1;
+		SSD1306_DrawCircle(x0, y0, r, color);
 		SSD1306_UpdateScreen();
-		while(1){}
-		delay(1000);
-		items[0].set(0, "OLED_INIT");
-		DrawList.ItemsCount++;
-		retVal |= COMPONENTS_ITEMS::OLED;
-		gui_set_curList(&DrawList);
-	}
-	gui_draw();
-	delay(TIME_BETWEEN_INITS);
-	if (MyContacts.init()) {
-		items[1].set(2, "FLASH MEM INIT");
-		retVal |= COMPONENTS_ITEMS::FLASH_MEM;
-	} else {
-		items[1].set(2, "FLASH FAILED");
-	}
-	DrawList.ItemsCount++;
-	gui_draw();
-	delay(TIME_BETWEEN_INITS);
+		SSD1306_DrawTriangle(20, 20, 30, 15, 45, 50, color);
 
-	//test for IR??
-	if (Radio.initialize(RF69_915MHZ, getContactStore().getMyInfo().getUniqueID())) {
-		items[2].set(1, "RADIO INIT");
-		Radio.setPowerLevel(31);
-		retVal |= COMPONENTS_ITEMS::RADIO;
-	} else {
-		items[2].set(1, "RADIO FAILED");
+		const char *message1 = "Hello, world\n";
+		const char *message2 = "I am a comupter.\n";
+		const char *message3 = "10101010010101001010";
+		SSD1306_Puts(message1, &Font_7x10, 1);
+		SSD1306_GotoXY(0, 10);
+		SSD1306_Puts(message2, &Font_7x10, 1);
+		SSD1306_GotoXY(0, 20);
+		SSD1306_Puts(message3, &Font_7x10, 1);
+		SSD1306_UpdateScreen();*/
+		//SSD1306_DrawPixel(127, 0, 1);
+
+		//SSD1306_UpdateScreen();
+
+
+		//while(1){}
 	}
 
-	DrawList.ItemsCount++;
-	delay(TIME_BETWEEN_INITS);
-	gui_draw();
-	delay(1000);
-
-	gui_set_curList(0);
-
-	gui_lable_multiline("#dcdn16", 0, 10, 128, 64, 0, 0);
-	gui_lable_multiline("><>", 0, 40, 128, 64, 0, 0);
-	gui_lable_multiline("   Cyberez Inc", 0, 50, 128, 64, 0, 0);
-	gui_draw();
-	delay(3000);
-
-	StateFactory::getIRPairingState()->BeTheBob();
-	CurrentState = StateFactory::getMenuState();
-	KB.resetLastPinTick();
 	return true;
 }
 
