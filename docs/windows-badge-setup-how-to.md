@@ -60,7 +60,7 @@ For bug reports, read
   [here](http://eclipse.mirror.rafal.ca/oomph/epp/neon/R2a/eclipse-inst-win64.exe)
 - Follow install wizard steps to install Eclipse.
 - To setup Eclipse for ARM development follow the [Eclipse
-  Setup](docs/eclipse_setup.md). **WARNING** There is one MAJOR difference
+  Setup](eclipse_setup.md). **WARNING** There is one MAJOR difference
   between Linux vs Windows Eclipse environment. The step when you go to set up
   the **External Tool** is not well understood yet as I don't know which command
   is issued to flash our board. Hopefully this will be fixed in the future but
