@@ -20,4 +20,14 @@ necessary parts.
 An effort has/will be made to ensure that users/developers are able to
 learn on different operating systems. Currently the following operating systems
 have a setup guide:
+## Different OS Guides
+### Windows
+- [Windows 7/10](docs/windows-badge-setup-how-to.md)
+
+### Linux
 - [Ubuntu 16.04](docs/ubuntu-badge-setup-how-to.md)
+
+## Eclipse
+A work in progress guide for setting up [Eclipse](docs/eclipse_setup.md). If you
+find issues with the guide or if something is not clear contact either @gaterbyte
+or @steve-offutt.
