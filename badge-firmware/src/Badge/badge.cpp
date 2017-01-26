@@ -142,22 +142,22 @@ uint32_t startBadge() {
 	//		uint8_t(0), uint8_t(0));
 	//DO SELF CHECK
 	if (gui_init()) {
-		delay(5000);
+		delay(5000); // This shows the splash screen for 5 seconds.
 		//gui_draw();
-		int8_t pix_val = 1;
-		while(1){
-			for(int j = 0; j < SSD1306_HEIGHT; j++)
-			{
-				for(int i = 0; i < SSD1306_WIDTH; i++)
-				{
-					SSD1306_DrawPixel(i,j, pix_val);
+		//int8_t pix_val = 1;
+		//while(1){
+		//	for(int j = 0; j < SSD1306_HEIGHT; j++)
+		//	{
+		//		for(int i = 0; i < SSD1306_WIDTH; i++)
+		//		{
+		//			SSD1306_DrawPixel(i,j, pix_val);
 
-					//delay(500);
-				}
-				SSD1306_UpdateScreen();
-			}
-			pix_val = ~pix_val;
-		}
+		//			//delay(500);
+		//		}
+		//		SSD1306_UpdateScreen();
+		//	}
+		//	pix_val = ~pix_val;
+		//}
 		//delay(1000);
 		//gui_draw();
 		//SSD1306_Puts("Hello\n", &Font_7x10, 1);
@@ -190,54 +190,73 @@ uint32_t startBadge() {
 	return true;
 }
 
+void scroll_screen()
+{
+
+    int8_t pix_val = 1;
+    while(1){
+        for(int j = 0; j < SSD1306_HEIGHT; j++)
+        {
+            for(int i = 0; i < SSD1306_WIDTH; i++)
+            {
+                SSD1306_DrawPixel(i,j, pix_val);
+
+                //delay(500);
+            }
+            SSD1306_UpdateScreen();
+        }
+        pix_val = ~pix_val;
+    }
+}
+
 void loopBadge() {
-
+    scroll_screen();
 	//check to see if keyboard should be ignored
-	uint32_t tick = HAL_GetTick();
-	KB.scan();
+	//uint32_t tick = HAL_GetTick();
+	//KB.scan();
 
-	ReturnStateContext rsc = CurrentState->run(KB);
+	//ReturnStateContext rsc = CurrentState->run(KB);
 
-	if (rsc.Err.ok()) {
-		if (CurrentState != rsc.NextMenuToRun) {
-			//on state switches reset keyboard and give a 1 second pause on reading from keyboard.
-			KB.reset();
-		}
-		if (CurrentState != StateFactory::getGameOfLifeState() && (tick > KB.getLastPinSelectedTick())
-				&& (tick - KB.getLastPinSelectedTick()
-						> (1000 * 60 * getContactStore().getSettings().getScreenSaverTime()))) {
-			CurrentState->shutdown();
-			CurrentState = StateFactory::getGameOfLifeState();
-		} else {
-			CurrentState = rsc.NextMenuToRun;
-		}
-	} else {
-		CurrentState = StateFactory::getDisplayMessageState(StateFactory::getMenuState(), "Run State Error....", 2000);
-	}
+	//if (rsc.Err.ok()) {
+	//	if (CurrentState != rsc.NextMenuToRun) {
+	//		//on state switches reset keyboard and give a 1 second pause on reading from keyboard.
+	//		KB.reset();
+	//	}
+	//	if (CurrentState != StateFactory::getGameOfLifeState() && (tick > KB.getLastPinSelectedTick())
+	//			&& (tick - KB.getLastPinSelectedTick()
+	//					> (1000 * 60 * getContactStore().getSettings().getScreenSaverTime()))) {
+	//		CurrentState->shutdown();
+	//		CurrentState = StateFactory::getGameOfLifeState();
+	//	} else {
+	//		CurrentState = rsc.NextMenuToRun;
+	//	}
+	//} else {
+	//	CurrentState = StateFactory::getDisplayMessageState(StateFactory::getMenuState(), "Run State Error....", 2000);
+	//}
 
-	if (getContactStore().getSettings().isNameSet()) {
-		StateFactory::getIRPairingState()->ListenForAlice();
-	}
-	StateFactory::getMessageState()->blink();
+	//if (getContactStore().getSettings().isNameSet()) {
+	//	StateFactory::getIRPairingState()->ListenForAlice();
+	//}
+	//StateFactory::getMessageState()->blink();
 
-	static uint32_t lastSendTime = 0;
-	if (tick - lastSendTime > 10) {
-		lastSendTime = tick;
-		if (Radio.receiveDone()) {
-			if (Radio.TARGETID == RF69_BROADCAST_ADDR) {
-				StateFactory::getMessageState()->addRadioMessage((const char *) &Radio.DATA[0], Radio.DATALEN,
-						RF69_BROADCAST_ADDR, Radio.RSSI);
-			} else {
-				StateFactory::getMessageState()->addRadioMessage((const char *) &Radio.DATA[0], Radio.DATALEN,
-						Radio.SENDERID, Radio.RSSI);
-			}
-#ifndef DONT_USE_ACK
-			if(Radio.ACK_REQUESTED && Radio.SENDERID!=RF69_BROADCAST_ADDR) {
-				Radio.sendACK("ACK",4);
-			}
-#endif
-		}
-	}
+	//static uint32_t lastSendTime = 0;
+	//if (tick - lastSendTime > 10) {
+	//	lastSendTime = tick;
+	//	if (Radio.receiveDone()) {
+	//		if (Radio.TARGETID == RF69_BROADCAST_ADDR) {
+	//			StateFactory::getMessageState()->addRadioMessage((const char *) &Radio.DATA[0], Radio.DATALEN,
+	//					RF69_BROADCAST_ADDR, Radio.RSSI);
+	//		} else {
+	//			StateFactory::getMessageState()->addRadioMessage((const char *) &Radio.DATA[0], Radio.DATALEN,
+	//					Radio.SENDERID, Radio.RSSI);
+	//		}
+//#ifndef DONT_USE_ACK
+//			if(Radio.ACK_REQUESTED && Radio.SENDERID!=RF69_BROADCAST_ADDR) {
+//				Radio.sendACK("ACK",4);
+//			}
+//#endif
+//		}
+//	}
 	//configure 1 time listen RegListen1, RegListen2, RegListen3
 	//defaults are good except for ListenCriteria should be 1 not 0
 
@@ -258,6 +277,6 @@ void loopBadge() {
 
 	//getRadio().setListen();
 
-	gui_draw();
+	//gui_draw();
 }
 

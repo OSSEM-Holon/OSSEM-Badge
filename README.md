@@ -15,6 +15,10 @@ hardware required for the badge development is:
 All of the above are links to Amazon. Some other good sources for these parts
 are Digikey, Mouser and Ebay. These are only some of the places to acquire the
 necessary parts.
+- Some jumper cables. No, not those jumper cables.
+  [These](https://www.amazon.com/Breadboard-Jumper-Wire-75pcs-pack/dp/B0040DEI9M)
+  jumper cables. It helps to get an assorted mix of male-male, female-male and
+  female-male. 
 
 # Setup
 An effort has/will be made to ensure that users/developers are able to
@@ -31,3 +35,24 @@ have a setup guide:
 A work in progress guide for setting up [Eclipse](docs/eclipse_setup.md). If you
 find issues with the guide or if something is not clear contact either @gaterbyte
 or @steve-offutt.
+
+## ST-Link Hook-Up
+To hook up the ST-Link V2 to the STM32F103C9T6 board we have to have some female
+to female jumpers. If you don't already have some available bum some from
+@steve-offutt :-P
+
+The way we hook up the ST-Link is as follows:
+
+| ST-Link V2   |  STM32F103C8T6  |
+| :----------: | :-------------: |
+| VCC/VDD      | 3.3V Header Pin |
+| GND          | GND             |
+| CLK          | DCLK            |
+| SWD          | DIO             |
+
+**WARNING:** If you are unsure about your wiring, **ASK SOMEONE!!** You can
+fry potentially fry your board. It is worth asking before plugging into random
+ports! You have been warned. 
+
+# Lessons
+[Lesson 1](docs/lesson1.md)
