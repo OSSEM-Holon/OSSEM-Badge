@@ -44,4 +44,6 @@ void loopBadge(void);
 
 void delay(uint32_t time);
 
+void scroll_screen();
+
 #endif
